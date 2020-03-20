@@ -120,6 +120,7 @@ android/configs/android-*.cfg
 
 # ignore build script and out folder
 darkonah.sh
+prototype.sh
 dx.sh
 dz.sh
 out
