@@ -34,12 +34,12 @@ ifeq ($(KERNEL_BUILD),1)
 	WLAN_ROOT := drivers/staging/qcacld-3.0
 	WLAN_COMMON_ROOT := ../qca-wifi-host-cmn
 	WLAN_COMMON_INC := $(WLAN_ROOT)/$(WLAN_COMMON_ROOT)
+	WLAN_DISABLE_BUILD_TAG := y
 endif
 
 # Make WLAN as open-source driver by default
 WLAN_OPEN_SOURCE := 1
 
-ifeq ($(KERNEL_BUILD), 0)
 	# These are configurable via Kconfig for kernel-based builds
 	# Need to explicitly configure for Android-based builds
 
@@ -246,7 +246,6 @@ endif
 	# Flag to enable MCC to SCC switch feature
 	CONFIG_MCC_TO_SCC_SWITCH := y
 
-endif
 
 #enable spectral scan feature
 CONFIG_WLAN_SPECTRAL_SCAN := y
@@ -292,13 +291,15 @@ BUILD_DEBUG_VERSION := 0
 #Enable this flag to build driver in diag version
 BUILD_DIAG_VERSION := 0
 
-#Do we panic on bug?  default is to warn
 ifeq ($(CONFIG_SLUB_DEBUG), y)
 	PANIC_ON_BUG := 1
+	WLAN_WARN_ON_ASSERT := 1
 else ifeq ($(CONFIG_PERF_DEBUG), y)
 	PANIC_ON_BUG := 1
+	WLAN_WARN_ON_ASSERT := 1
 else
 	PANIC_ON_BUG := 0
+	WLAN_WARN_ON_ASSERT := 0
 endif
 
 #Enable OL debug and wmi unified functions
@@ -1303,8 +1304,6 @@ CDEFINES :=	-DANI_LITTLE_BYTE_ENDIAN \
 		-DCONFIG_HDD_INIT_WITH_RTNL_LOCK \
 		-DMWS_COEX
 
-subdir-ccflags-y := $(call cc-disable-warning, misleading-indentation)
-
 ifeq ($(CONFIG_WLAN_FEATURE_FIPS), y)
 CDEFINES += -DWLAN_FEATURE_FIPS
 endif
@@ -1511,6 +1510,10 @@ endif
 
 ifeq ($(PANIC_ON_BUG),1)
 CDEFINES += -DPANIC_ON_BUG
+endif
+
+ifeq ($(WLAN_WARN_ON_ASSERT), 1)
+CDEFINES += -DWLAN_WARN_ON_ASSERT
 endif
 
 ifeq ($(WLAN_OPEN_SOURCE), 1)
@@ -1981,6 +1984,9 @@ endif
 ifdef WLAN_HDD_ADAPTER_MAGIC
 CDEFINES += -DWLAN_HDD_ADAPTER_MAGIC=$(WLAN_HDD_ADAPTER_MAGIC)
 endif
+
+ccflags-y += $(call cc-option, -g0)
+ccflags-y += $(call cc-option, -Os)
 
 # inject some build related information
 ifeq ($(CONFIG_BUILD_TAG), y)

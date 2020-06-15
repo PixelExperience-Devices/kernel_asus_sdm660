@@ -22,6 +22,8 @@
 		qcom,mdss-dsi-panel-type = "dsi_video_mode";
 		qcom,mdss-dsi-panel-destination = "display_1";
 		qcom,mdss-dsi-panel-framerate = <60>;
+		qcom,mdss-dsi-max-refresh-rate = <60>;
+		qcom,mdss-dsi-min-refresh-rate = <60>;
 		qcom,mdss-dsi-virtual-channel-id = <0>;
 		qcom,mdss-dsi-stream = <0>;
 		qcom,mdss-dsi-panel-width = <1080>;
@@ -302,10 +304,5 @@
 		qcom,mdss-dsi-panel-status-value = <0x9C>;
 		qcom,mdss-dsi-panel-max-error-count = <3>;
 		/* Huaqin add for ESD check by yuexinghan 20171103 end */
-		qcom,mdss-dsi-pan-enable-dynamic-bitclk;
-		qcom,mdss-dsi-dynamic-bitclk_freq = <798240576 801594528 804948480
-			808302432 811656384>;
-		qcom,mdss-dsi-pan-enable-dynamic-fps;
-		qcom,mdss-dsi-pan-fps-update = "dfps_immediate_porch_mode_vfp";
 	};
 };
