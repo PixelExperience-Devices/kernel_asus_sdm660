@@ -118,9 +118,7 @@ all.config
 # fetched Android config fragments
 android/configs/android-*.cfg
 
-# ignore build script and out folder
-darkonah.sh
-prototype.sh
-dx.sh
-dz.sh
-out
+#
+#Ignoring Android.bp link file
+#
+Android.bp
