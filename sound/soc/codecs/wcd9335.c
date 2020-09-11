@@ -94,7 +94,7 @@
 	(TASHA_CPE_SS_ERR_STATUS_WDOG_BITE | \
 	 TASHA_CPE_SS_ERR_STATUS_MEM_ACCESS)
 
-#define SLIM_BW_CLK_GEAR_9 6200000
+#define SLIM_BW_CLK_GEAR_10 24600000
 #define SLIM_BW_UNVOTE 0
 
 #define CPE_FLL_CLK_75MHZ 75000000
@@ -135,7 +135,7 @@
 
 #define CALCULATE_VOUT_D(req_mv) (((req_mv - 650) * 10) / 25)
 
-static int cpe_debug_mode;
+static int cpe_debug_mode = 0;
 
 #define TASHA_MAX_MICBIAS 4
 #define DAPM_MICBIAS1_STANDALONE "MIC BIAS1 Standalone"
@@ -13324,7 +13324,7 @@ static int tasha_codec_vote_max_bw(struct snd_soc_codec *codec,
 	if (vote) {
 		tasha->ref_count++;
 		if (tasha->ref_count == 1) {
-			bw_ops = SLIM_BW_CLK_GEAR_9;
+			bw_ops = SLIM_BW_CLK_GEAR_10;
 			tasha_codec_slim_reserve_bw(codec,
 				bw_ops, true);
 		}
