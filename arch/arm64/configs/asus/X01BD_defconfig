@@ -1694,6 +1694,7 @@ CONFIG_BLK_DEV_RAM_SIZE=8192
 # Misc devices
 #
 # CONFIG_AD525X_DPOT is not set
+CONFIG_BATTERY_SAVER=y
 # CONFIG_DUMMY_IRQ is not set
 # CONFIG_PHANTOM is not set
 # CONFIG_SGI_IOC4 is not set
